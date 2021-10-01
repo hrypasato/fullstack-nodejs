@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullstack prints</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap" rel="stylesheet">
+    <style>
+        html{
+            text-align: center;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        #container{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            justify-items: center;
+        }
+
+        img{
+            height: 300px;
+            width: 300px;
+            border-radius: 10px;
+        }
+
+        p{
+            color: grey;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Prints</h1>
+    </header>
+    <main id="container">
+    </main>
+    <footer>
+        <button id="prev">Previous</button>
+        <button id="next">Next</button>
+    </footer>
+
+    <script>
+        const PRODUCT_API = 'http://localhost:1337/products'
+        const LIMIT = 3;
+        let offset = 0; 
+
+        const getProducts = () =>{
+            let url = `${PRODUCT_API}?limit=${LIMIT}&offset=${offset}`;
+
+            fetch(url).then(res => res.json()).then(products => {
+                document.getElementById('next').disabled = (products.length < 3)
+
+                const divs = products.map((item) =>{
+                        const { user, alt_description, urls } = item;
+                        return `<div>
+                                    <figure>
+                                        <img src=${urls.full} alt=${alt_description}>
+                                        <figcaption>${alt_description}</figcaption>
+                                        <p>${user.name}</p>
+                                    </figure>
+                                </div>`
+                    })
+                document.getElementById("container").innerHTML = divs.join('')
+            })
+
+            disableButton();
+        }
+        
+        const disableButton = () => {
+            document.getElementById('prev').disabled = (offset === 0); 
+        }
+
+        const prev = () => {
+            offset = (offset<=0) ? 0: offset-LIMIT;
+            getProducts();
+        }
+
+        const next = () => {
+            offset += LIMIT;
+            getProducts();
+        }
+
+        document.getElementById("prev").onclick = prev;
+        document.getElementById("next").onclick = next;
+
+        getProducts();
+    </script>
+</body>
+</html>
