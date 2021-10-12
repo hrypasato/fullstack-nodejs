@@ -57,12 +57,12 @@
                 document.getElementById('next').disabled = (products.length < 3)
 
                 const divs = products.map((item) =>{
-                        const { user, alt_description, urls } = item;
+                        const { userName, description, imgThumb } = item;
                         return `<div>
                                     <figure>
-                                        <img src=${urls.full} alt=${alt_description}>
-                                        <figcaption>${alt_description}</figcaption>
-                                        <p>${user.name}</p>
+                                        <img src=${imgThumb} alt=${description}>
+                                        <figcaption>${description}</figcaption>
+                                        <p>${userName}</p>
                                     </figure>
                                 </div>`
                     })
