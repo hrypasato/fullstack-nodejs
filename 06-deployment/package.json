@@ -15,11 +15,13 @@
     "cuid": "^2.1.8",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-pino-logger": "^6.0.0",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.10",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "pino-noir": "^2.2.1",
     "validator": "^13.6.0"
   }
 }
